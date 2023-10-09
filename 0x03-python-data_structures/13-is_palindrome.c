@@ -1,31 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "lists.h"
-
 /**
- * is_palindrome - func calls check_palndrm to know  list is palindrome
- * @head: pointer to the begin of the list
- * Return: 0 if not , else 1
+ * is_palindrome - checks for list is palindrome
+ * @head: head of  list
+ * Return:  boolean
  */
 int is_palindrome(listint_t **head)
 {
-	if (head == NULL || *head == NULL)
-		return (1);
-	return (check_palndrm(head, *head));
-}
+	int length = 0, i = 0;
+	listint_t *tmpo;
+	int *Ns;
 
-/**
- * check_palndrm - func to test  list is palindrome
- * @head: pointer to the begin of the list
- * @last: pointer to the end of the list
- * Return: 0 if not,else 1
- */
-int check_palndrm(listint_t **head, listint_t *last)
-{
-	if (last == NULL)
+	tmpo = *head;
+	if ((*head) == NULL)
 		return (1);
-	if (check_palndrm(head, last->next) && (*head)->n == last->n)
+	while (tmpo->next != NULL)
 	{
-		*head = (*head)->next;
-		return (1);
+		length++;
+		tmpo = tmpo->next;
 	}
-	return (0);
+	if (length == 1)
+		return (1);
+	Ns = malloc(sizeof(int) * length);
+	tmpo = *head;
+	while (tmpo != NULL)
+	{
+		Ns[i] = tmpo->n;
+		tmpo = tmpo->next;
+		i++;
+	}
+	for (i = 0; i <= length / 2; i++)
+	{
+		if(Ns[i] != Ns[length - i])
+			return (0);
+	}
+	return (1);
 }
