@@ -1,114 +1,90 @@
 #include "lists.h"
 
 /**
- * reverse - reverse 2nd half of the list
+ * reverse_list - reverse a list
+ * @head: pointer  to begin of list
  *
- * @h_r: point of the second list
- * Return: no return
+ * Return: nothing
  */
-void reverse(listint_t **h_r)
+void reverse_list(listint_t **head)
 {
-	listint_t *prvs;
-	listint_t *crrnt;
-	listint_t *nxt;
+	listint_t *prev = NULL;
+	listint_t *current = *head;
+	listint_t *next = NULL;
 
-	prvs = NULL;
-	crrnt = *h_r;
-
-	while (crrnt != NULL)
+	while (current)
 	{
-		nxt = crrnt->next;
-		crrnt->next = prvs;
-		prvs = crrnt;
-		crrnt = nxt;
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
 	}
 
-	*h_r = prvs;
+	*head = prev;
 }
 
 /**
- * compare - compares  int  the list
+ * compare_list -  compare element of  list
+ * @firsthlf: pointer for first hlf
+ * @secondhlf: pointer for second hlf
  *
- * @h1: pointer of the first half
- * @h2: pointer of the second half
- * Return: 1 if equals, 0 if not
+ * Return: 0 if is not palindrome otherwise 1
  */
-int compare(listint_t *h1, listint_t *h2)
+int compare_list(listint_t *first_hlf, listint_t *second_hlf)
 {
-	listint_t *tmpo1;
-	listint_t *tmpo2;
-
-	tmpo1 = h1;
-	tmpo2 = h2;
-
-	while (tmpo1 != NULL && tmpo2 != NULL)
+	while (first_hlf && second_hlf)
 	{
-		if (tmpo1->n == tmpo2->n)
-		{
-			tmpo1 = tmpo1->next;
-			tmpo2 = tmpo2->next;
-		}
-		else
-		{
+		if (first_hlf->n != second_hlf->n)
 			return (0);
-		}
+		first_hlf = first_hlf->next;
+		second_hlf = second_hlf->next;
 	}
-
-	if (tmpo1 == NULL && tmpo2 == NULL)
-	{
-		return (1);
-	}
-
-	return (0);
+	return (1);
 }
 
 /**
- * is_palindrome - test  a single linked list
- * is a palindrome
- * @head: pointer for head  list
- * Return: 0 if it is not a palindrome,
- * 1 if it is a palndrome
+ * is_palindrome - checks if a singly linked list
+ * 		is a palindrome
+ * @head:pointer to head of list
+ * Return: 0 if list is not palindrome otherwise 1
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *slower, *faster, *prev_slower;
-	listint_t *scn_half, *middle;
-	int isplndrm;
+	listint_t *faster_ptr, *prev_of_slower_ptr, *slower_ptr, *mid_ptr;
+	listint_t *firsthlf_ptr, *secondhlf_ptr;
+	int reslt;
 
-	slower = faster = prev_slower = *head;
-	middle = NULL;
-	isplndrm = 1;
+	if ((head == NULL) || (*head == NULL))
+		return (1);
 
-	if (*head != NULL && (*head)->next != NULL)
+	faster_ptr = prev_of_slower_ptr = slower_ptr = firsthlf_ptr = *head;
+	while (faster_ptr != NULL && faster_ptr->next != NULL)
 	{
-		while (faster != NULL && faster->next != NULL)
-		{
-			faster = faster->next->next;
-			prev_slower = slower;
-			slower = slower->next;
-		}
+		faster_ptr = faster_ptr->next->next;
 
-		if (faster != NULL)
-		{
-			middle = slower;
-			slower = slower->next;
-		}
-
-		scn_half = slower;
-		prev_slower->next = NULL;
-		reverse(&scn_half);
-		isplndrm = compare(*head, scn_half);
-
-		if (middle != NULL)
-		{
-			prev_slower->next = middle;
-			middle->next = scn_half;
-		}
-		else
-		{
-			prev_slower->next = scn_half;
-		}
+		prev_of_slower_ptr = slower_ptr;
+		slower_ptr = slower_ptr->next;
 	}
+	if (faster_ptr != NULL)
+	{
+		mid_ptr = slower_ptr;
+		secondhlf_ptr = mid_ptr->next;
+	}
+	else
+		secondhlf_ptr = slower_ptr;
 
-	return (isplndrm);
+	prev_of_slower_ptr->next = NULL;
+	reverse_list(&secondhlf_ptr);
+	reslt = compare_list(firsthlf_ptr, secondhlf_ptr);
+
+	reverse_list(&(secondhlf_ptr));
+	if (faster_ptr != NULL)
+	{
+		prev_of_slower_ptr->next = mid_ptr;
+		mid_ptr->next = secondhlf_ptr;
+	}
+	else
+		prev_of_slower_ptr->next = secondhlf_ptr;
+
+	return (reslt);
 }
