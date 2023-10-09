@@ -1,58 +1,53 @@
 #include "lists.h"
-listint_t *reverse_listint(listint_t **head);
-int is_palindrome(listint_t **head);
 /**
- * reverse_listint - Reverse  single-linked listint_t list.
- * @head:  pointer begin node of the list that reverse.
- * Return: A pointer for the head  the reversed list.
+ * reverse_list - reverse  list
+ * @head: pointer to list
+ * Return: add of new head
  */
-listint_t *reverse_listint(listint_t **head)
+listint_t *reverse_list(listint_t **head)
 {
-listint_t *node = *head, *next, *prev = NULL;
-while (node)
-{
-next = node->next;
-node->next = prev;
-prev = node;
-node = next;
-}
-*head = prev;
-return (*head);
+	listint_t *prev = NULL, *next;
+
+	while (*head != NULL)
+	{
+		next = (*head)->next;
+		(*head)->next = prev;
+		prev = *head;
+		*head = next;
+	}
+
+	*head = prev;
+	return (*head);
 }
 /**
- * is_palindrome - Checks if a singly linked list is a palindrome.
- * @head: A pointer to the head of the linked list.
- * Return: If the linked list is not a palindrome - 0.
- * If the linked list is a palindrome - 1.
+ * is_palindrome - tests if list is a palindrome
+ * @head: pointer to list
+ * Return: 1 if palindrome, 0 if not
  */
 int is_palindrome(listint_t **head)
 {
-listint_t *tmpo, *revs, *mid;
-size_t size = 0, i;
-if (*head == NULL || (*head)->next == NULL)
-return (1);
-tmpo = *head;
-while (tmpo)
-{
-size++;
-tmpo = tmpo->next;
-}
-tmpo = *head;
-for (i = 0; i < (size / 2) - 1; i++)
-tmpo = tmpo->next;
-if ((size % 2) == 0 && tmpo->n != tmpo->next->n)
-return (0);
-tmpo = tmpo->next->next;
-revs = reverse_listint(&tmpo);
-mid = revs;
-tmpo = *head;
-while (revs)
-{
-if (tmpo->n != revs->n)
-return (0);
-tmpo = tmpo->next;
-revs = revs->next;
-}
-reverse_listint(&mid);
-return (1);
+	listint_t *slower = *head, *faster = *head, *one, *two;
+
+	if (!(head && *head) || (*head)->next == NULL)
+		return (1);
+	while (faster != NULL && faster->next != NULL)
+	{
+		faster = faster->next->next;
+		one = slower;
+		slower = slower->next;
+	}
+
+	slower = reverse_list(&slower);
+	two = slower;
+	faster = *head;
+	while (faster && slower)
+	{
+		if (faster->n != slower->n)
+			return (0);
+		faster = faster->next;
+		slower = slower->next;
+	}
+	slower = reverse_list(&two);
+	one->next = slower;
+	return (1);
 }
