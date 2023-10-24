@@ -1,21 +1,22 @@
 #!/usr/bin/python3
-"""MyShape Class
+"""The Square
 
-Defining a class for a 2D shape
+Defining the class
 
 """
 
-class MyShape:
-    """A 2D shape
 
-    Methods for manipulating it
+class Square:
+    """A 2d square
+
+    methods for maipulating it
 
     """
 
     def __init__(self, size):
-        """Make a shape of a given size
+        """Make a square of a given size
 
-        Size of the new shape is private
+        Size of the new square is private
 
         Args:
             size (int): the length of the sides
@@ -23,4 +24,3 @@ class MyShape:
         """
 
         self.__size = size
-
