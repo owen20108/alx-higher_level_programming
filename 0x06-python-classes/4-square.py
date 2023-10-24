@@ -1,21 +1,22 @@
 #!/usr/bin/python3
-"""MyShape Class
+"""The Square
 
-Definition of a shape
+definition of the square
 
 """
 
-class MyShape:
-    """A 2D shape
 
-    Methods for manipulating it
+class Square:
+    """a 2d square
+
+    methods for manipulating it
 
     """
 
     def __init__(self, size=0):
-        """Creates a shape of a given size
+        """Creates a square of a given size
 
-        Size of the shape is hidden
+        Size of the square is hidden
 
         Args:
             size (int): length of the sides
@@ -33,7 +34,7 @@ class MyShape:
         self.__size = size
 
     def area(self):
-        """Returns the size of the shape
+        """Returns the size of square
 
         Returns:
             size squared for area
@@ -41,4 +42,3 @@ class MyShape:
         """
 
         return self.__size ** 2
-
