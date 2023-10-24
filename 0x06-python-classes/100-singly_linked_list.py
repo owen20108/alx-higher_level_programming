@@ -1,24 +1,25 @@
 #!/usr/bin/python3
-"""Module for a singly linked list"""
+"""module for a singly linked list"""
 
-class MyNode:
-    """Defines a node"""
+
+class Node:
+    """"defines a node"""
 
     def __init__(self, data, next_node=None):
-        """Initializes the node with instance variables"""
+        """initializes the node with instance variables"""
 
         self.data = data
         self.next_node = next_node
 
     @property
     def data(self):
-        """Gets data attribute"""
+        """gets data attribute"""
 
-        return self.__data
+        return (self.__data)
 
     @data.setter
     def data(self, value):
-        """Sets data attribute"""
+        """sets data attribute"""
 
         if not isinstance(value, int):
             raise TypeError('data must be an integer')
@@ -26,22 +27,24 @@ class MyNode:
 
     @property
     def next_node(self):
-        """Get next_node attribute"""
+        """get next_node attribute
+        Returns: next node
+        """
 
-        return self.__next_node
+        return (self.__next_node)
 
     @next_node.setter
     def next_node(self, value):
-        """Set value of next node"""
+        """set value of next node"""
 
-        if value is not None and not isinstance(value, MyNode):
-            raise TypeError('next_node must be a MyNode object')
+        if (value is not None and not isinstance(value, Node)):
+            raise TypeError('next_node must be a Node object')
 
         self.__next_node = value
 
 
-class MySinglyLinkedList:
-    """Defines a singly linked list"""
+class SinglyLinkedList:
+    """defines a singly linked list"""
 
     def __init__(self):
         """Initializes the singly linked list"""
@@ -49,7 +52,7 @@ class MySinglyLinkedList:
         self.head = None
 
     def __str__(self):
-        """Make the list printable"""
+        """make list printable"""
 
         printsll = ""
         location = self.head
@@ -59,12 +62,11 @@ class MySinglyLinkedList:
         return printsll[:-1]
 
     def sorted_insert(self, value):
-        """Insert in a sorted fashion
-
+        """insert in a sorted fashion
         Args:
             value: what the value will be on the node
         """
-        new = MyNode(value)
+        new = Node(value)
         if not self.head:
             self.head = new
             return
@@ -78,4 +80,3 @@ class MySinglyLinkedList:
         if location.next_node:
             new.next_node = location.next_node
         location.next_node = new
-
