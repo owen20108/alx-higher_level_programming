@@ -1,19 +1,20 @@
 #!/usr/bin/node
-/**
- * Square class that inherits from the Rectangle class.
- */
-const Rectangle = require('./4-rectangle');
 
-class Square extends Rectangle {
-  /**
-   * Constructor for the Square class.
-   * @param {number} size - The size of the square (must be a positive number).
-   */
-  constructor(size) {
-    // Call the constructor of the parent class (Rectangle) with equal width and height
-    super(size, size);
+const BaseSquare = require('./5-square');
+
+class Square extends BaseSquare {
+  charPrint (c) {
+    if (c === undefined || c === '') {
+      c = 'X';
+    }
+    for (let i = 0; i < this.height; i++) {
+      let line = '';
+      for (let j = 0; j < this.width; j++) {
+        line += c;
+      }
+      console.log(line);
+    }
   }
 }
 
 module.exports = Square;
-
