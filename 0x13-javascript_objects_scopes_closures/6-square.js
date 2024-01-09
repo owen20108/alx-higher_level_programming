@@ -1,29 +1,20 @@
 #!/usr/bin/node
-/**
- * Square class that inherits from the previous Square class.
- */
-const PrevSquare = require('./5-square');
 
-class Square extends PrevSquare {
-  /**
-   * Prints a visual representation of the square using the specified character.
-   * If no character is provided, defaults to 'X'.
-   * @param {string} c - The character to use for printing the square.
-   */
-  charPrint(c) {
-    const myChar = c === undefined ? 'X' : c;
+const BaseSquare = require('./5-square');
+
+class Square extends BaseSquare {
+  charPrint (c) {
+    if (c === undefined || c === '') {
+      c = 'X';
+    }
     for (let i = 0; i < this.height; i++) {
-      let row = '';
-      let y = 0;
-      while (y < this.width) {
-        row += myChar;
-        y++;
+      let line = '';
+      for (let j = 0; j < this.width; j++) {
+        line += c;
       }
-
-      console.log(row);
+      console.log(line);
     }
   }
 }
 
 module.exports = Square;
-
